@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { IconCalendarWeek,IconClock,IconMapPin,IconExternalLink,IconChevronUp ,IconChevronDown } from '@tabler/icons-react';
+import { useState, useEffect } from "react";
+import { IconChevronUp, IconChevronDown } from "@tabler/icons-react";
 import { fetchShowsData } from "../functions/FetchShowsData";
 import { TicketComponents } from "./TicketComponents";
- 
+import { Show } from "../interface/showsInterface";
+
+;
 
 export default function LiveShowsComponents() {
   const [showAllShows, setShowAllShows] = useState(false);
-  const [showsData, setShowsData] = useState<any>(null);
+  const [showsData, setShowsData] = useState<{ data: Show[]; meta: any } | null>(null);
 
   useEffect(() => {
     fetchShowsData()
@@ -19,25 +21,25 @@ export default function LiveShowsComponents() {
   }, []);
 
   const showsToDisplay = showAllShows
-    ? showsData
-    : showsData.slice(0, 6);
-    const hasMoreShows = showsData.length > 6;
+    ? showsData?.data
+    : showsData?.data?.slice(0, 6) || [];
+  const hasMoreShows = (showsData?.data?.length || 0) > 6;
 
-    const toggleShowsDisplay = () => {
-        setShowAllShows(!showAllShows);
-    
-        // Scroll to shows section when showing more
-        if (!showAllShows) {
-          setTimeout(() => {
-            document
-              .getElementById("shows")
-              ?.scrollIntoView({ behavior: "smooth" });
-          }, 100);
-        }
-      };
+  const toggleShowsDisplay = () => {
+    setShowAllShows(!showAllShows);
+
+    // Scroll to shows section when showing more
+    if (!showAllShows) {
+      setTimeout(() => {
+        document
+          .getElementById("shows")
+          ?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  };
   return (
     <>
-    <section id="shows" className="py-20 bg-black/30">
+      <section id="shows" className="py-20 bg-black/30">
         <div className="container mx-auto px-4">
           <h2
             className="text-4xl font-bold mb-12 text-center"
@@ -47,14 +49,14 @@ export default function LiveShowsComponents() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {showsToDisplay.map((show: any, index: number) => (
+            {showsToDisplay?.map((show) => (
               <TicketComponents
-                key={index}
-                title={show.title}
-                date={show.date}
-                time={show.time}
-                category={show.location}
-                link={show.ticketUrl}
+                key={show.id}
+                title={show.attributes.titulo}
+                date={show.attributes.diaFuncion}
+                time={show.attributes.horaFuncion}
+                category={show.attributes.ubicacion}
+                link={show.attributes.linkPaginaFuncion}
               />
             ))}
           </div>
@@ -68,12 +70,12 @@ export default function LiveShowsComponents() {
               >
                 {showAllShows ? (
                   <>
-                    <IconChevronUp  size={20} />
+                    <IconChevronUp size={20} />
                     <span>Ver menos</span>
                   </>
                 ) : (
                   <>
-                    <IconChevronDown  size={20} />
+                    <IconChevronDown size={20} />
                     <span>Ver más shows</span>
                   </>
                 )}
@@ -83,5 +85,5 @@ export default function LiveShowsComponents() {
         </div>
       </section>
     </>
-  )
+  );
 }
