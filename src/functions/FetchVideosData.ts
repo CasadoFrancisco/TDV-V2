@@ -1,12 +1,10 @@
 import axios from 'axios';
-import { STRAPIURL,API_TOKEN_STRAPI } from '../constants/constants';
-import { FetchVideosResponse } from '../interface/ObtainVideoData';
+import { STRAPIURL, API_TOKEN_STRAPI } from '../constants/constants';
 
-export async function fetchVideosData(): Promise<FetchVideosResponse> {
- 
+export async function fetchVideosData() {
 
   try {
-    const response = await axios.get(`${STRAPIURL}api/videos?populate=*`, {
+    const response = await axios.get(`${STRAPIURL}api/youtube-videos?populate=*`, {
       headers: {
         'Authorization': API_TOKEN_STRAPI,
         'Content-Type': 'application/json',
