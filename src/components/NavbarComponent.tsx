@@ -1,9 +1,6 @@
 import  { useEffect, useState } from "react";
 import { fetchHeaderData } from "../functions/HeaderFecthData";
 
-
-
-
 export default function NavbarComponent() {
 
   const [headerData, setHeaderData] = useState<any>([]);
@@ -17,10 +14,9 @@ export default function NavbarComponent() {
   const iconoNavbarUrl =
   headerData?.data?.[0]?.attributes?.iconoNabvar?.data?.attributes?.url;
 
-  console.log(iconoNavbarUrl,"dsadas");
   return (
     <>
-      <header className="container mx-auto py-6 px-4 fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-purple-900/90 to-indigo-900/90 backdrop-blur-md">
+      <header className="container mx-auto py-6 px-4 fixed top-2 rounded-2xl left-0 right-0 z-50 bg-gradient-to-r from-purple-900/90 to-indigo-900/90 backdrop-blur-md">
         <nav className="flex justify-between items-center">
           <div className="flex flex-row gap-4 text-2xl font-bold">
             <img src={iconoNavbarUrl} className="w-16 h-16 rounded-full" alt="" />
