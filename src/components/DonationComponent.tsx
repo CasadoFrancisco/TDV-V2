@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchDonacionMethodData } from "../functions/FetchDonacionMethodData";
 
 export default function DonationComponent() {
@@ -38,7 +38,7 @@ export default function DonationComponent() {
          
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {donationData.map((donation, index) => (
+            {donationData.map((donation:any, index:any) => (
               <div
                 key={donation.id}
                 className="bg-gradient-to-br from-purple-700/40 to-indigo-700/40 backdrop-blur-sm rounded-xl p-6 shadow-lg text-center"
